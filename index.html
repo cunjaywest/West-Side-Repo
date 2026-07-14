@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>My Apps</title>
+<style>
+  :root{
+    --void:#070809; --glass:rgba(20,22,27,.62); --glass-strong:rgba(15,17,21,.8);
+    --card:rgba(255,255,255,.045); --card-hair:rgba(255,255,255,.09);
+    --hair:rgba(255,255,255,.08); --hair-2:rgba(255,255,255,.14);
+    --text:#f3f5f8; --dim:#98a0ab; --faint:#5c636e;
+    --aurora:#5fe9c6; --amber:#f4bd5c; --blue:#74baff;
+    --font:-apple-system,"SF Pro Display","SF Pro Text",system-ui,"Segoe UI",Roboto,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;min-height:100%}
+  body{font-family:var(--font); color:var(--text); background:var(--void); min-height:100dvh; position:relative; overflow-x:hidden}
+  .aurora{position:absolute; top:-140px; left:-10%; right:-10%; height:340px; pointer-events:none; z-index:0;
+    background:radial-gradient(60% 100% at 30% 0%, rgba(95,233,198,.16), transparent 70%),
+               radial-gradient(55% 100% at 75% 10%, rgba(116,186,255,.13), transparent 72%),
+               radial-gradient(50% 100% at 55% 0%, rgba(155,140,255,.10), transparent 70%);
+    filter:blur(24px)}
+  .wrap{position:relative; z-index:1; max-width:520px; margin:0 auto; padding:calc(env(safe-area-inset-top) + 28px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  h1{font-size:26px; font-weight:700; letter-spacing:-.03em; margin:0}
+  .sub{font-size:12px; font-family:var(--mono); letter-spacing:.1em; color:var(--faint); text-transform:uppercase; margin-top:6px}
+  .banner{margin-top:18px; padding:13px 15px; border-radius:14px; font-size:13px; line-height:1.5;
+    background:rgba(244,189,92,.1); border:1px solid rgba(244,189,92,.28); color:#f4bd5c; display:none}
+  .banner.show{display:block}
+  .banner a{color:inherit}
+  .grid{display:flex; flex-direction:column; gap:12px; margin-top:26px}
+  .card{display:block; text-decoration:none; color:inherit; background:var(--card); border:1px solid var(--card-hair);
+    border-radius:18px; padding:17px 18px; position:relative; overflow:hidden; transition:.15s}
+  .card:active{background:rgba(255,255,255,.08)}
+  .card::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--dc); box-shadow:0 0 10px var(--dc)}
+  .card.live{--dc:var(--aurora)}
+  .card.soon{--dc:var(--amber); opacity:.72}
+  .card.backlog{--dc:var(--blue); opacity:.55}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .name{font-size:16.5px; font-weight:600; letter-spacing:-.01em}
+  .desc{font-size:13px; color:var(--dim); margin-top:5px; line-height:1.4}
+  .pill{font-size:9.5px; font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; padding:4px 9px; border-radius:999px; white-space:nowrap; flex:0 0 auto}
+  .pill.live{background:rgba(95,233,198,.14); color:var(--aurora); border:1px solid rgba(95,233,198,.3)}
+  .pill.soon{background:rgba(244,189,92,.12); color:var(--amber); border:1px solid rgba(244,189,92,.28)}
+  .pill.backlog{background:rgba(116,186,255,.1); color:var(--blue); border:1px solid rgba(116,186,255,.24)}
+  .foot{margin-top:30px; font-size:11.5px; color:var(--faint); line-height:1.6; text-align:center}
+</style>
+</head>
+<body>
+  <div class="aurora"></div>
+  <div class="wrap">
+    <h1>My Apps</h1>
+    <div class="sub">personal app hub</div>
+    <div class="banner" id="syncBanner">Cloud sync isn't set up yet — this app remembers things on this device only. Add your Supabase keys to <code>supabase-config.js</code> to sync everywhere.</div>
+
+    <div class="grid">
+      <a class="card live" href="west-highland-ride.html">
+        <div class="row"><span class="name">West Highland Ride</span><span class="pill live">Live</span></div>
+        <div class="desc">Bike touring route planner — map notes, trip &amp; budget, packing kit, bike loadout.</div>
+      </a>
+
+      <div class="card soon">
+        <div class="row"><span class="name">Idea Machine</span><span class="pill soon">Coming soon</span></div>
+        <div class="desc">Slot-machine app idea generator. Built in another chat — needs its source files brought over.</div>
+      </div>
+
+      <div class="card soon">
+        <div class="row"><span class="name">Tea?</span><span class="pill soon">Coming soon</span></div>
+        <div class="desc">Mood-based tea recommender. Built in another chat — needs its source files brought over.</div>
+      </div>
+
+      <div class="card backlog">
+        <div class="row"><span class="name">Cycling Route Map</span><span class="pill backlog">Backlog</span></div>
+        <div class="desc">Multi-route map with vibe filters (car-free / quiet / scenic). Needs a rebuild for live routing data.</div>
+      </div>
+
+      <div class="card backlog">
+        <div class="row"><span class="name">Bench Finder</span><span class="pill backlog">Backlog</span></div>
+        <div class="desc">Find and log good benches along a route. Needs a rebuild for live map data.</div>
+      </div>
+    </div>
+
+    <div class="foot">Add to your home screen for one-tap access, app-style.</div>
+  </div>
+
+  <script src="supabase-config.js"></script>
+  <script>
+    if(!window.SUPABASE_URL){ document.getElementById('syncBanner').classList.add('show'); }
+  </script>
+</body>
+</html>
